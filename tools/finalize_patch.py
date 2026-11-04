@@ -68,7 +68,8 @@ for name,rs in fixes.items():
 
 # Keep atlas dimensions within the old 3DS runtime's 1024 texture limit.
 chars=set(chr(i) for i in range(32,127))
-for p in G.rglob('*.lua'):chars.update(p.read_text(encoding='utf8'))
+for p in G.rglob('*.lua'):
+    if p.name!='ko_glyphs.lua':chars.update(p.read_text(encoding='utf8'))
 chars=sorted(c for c in chars if c>=' ' and c not in '\r\n\t')
 font=ImageFont.truetype('work/kr-unpacked/gui/font/Aller_Rg.ttf',12)
 glyphs={};missing=[]

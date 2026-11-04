@@ -9,6 +9,11 @@ local pattern = '[%z\1-\127\194-\244][\128-\191]*'
 local dialog = {key=false, pages={}, page=1, reveal=false, text=''}
 local poem = {text=false, pages={}, page=1}
 
+function K.reset()
+    dialog={key=false,pages={},page=1,reveal=false,text=''}
+    poem={text=false,pages={},page=1}
+end
+
 function K.name(value)
     value = tostring(value or '')
     return ui[value] or value

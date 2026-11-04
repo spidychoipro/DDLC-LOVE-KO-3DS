@@ -16,3 +16,5 @@ jobs:
       - name: Test system keyboard name confirmation
         run: |
           lua5.1 tests/test_native_nameentry.lua
+          lua5.1 tests/test_input_guard.lua
+

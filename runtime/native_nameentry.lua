@@ -1,9 +1,12 @@
 -- Delegate typing/composition to Nintendo 3DS's system software keyboard.
 -- No game-drawn keyboard or custom Hangul IME is used.
 local N={pending=false,notice=nil}
+local guard=require('input_guard')
 function N.open()
     N.pending=true;N.notice=nil
+    guard.suspend()
     love.keyboard.setTextInput(true)
+    guard.resume()
 end
 local function invalid(message)
     N.notice=message;changeState('title');menu_enable('dialog');menutext=message;menu_previous='title'
@@ -12,6 +15,7 @@ end
 function N.submit(text)
     if not N.pending then return false end
     N.pending=false
+    guard.resume()
     if type(text)~='string' or text=='' then changeState('title');return false end
     text=text:gsub('^%s+',''):gsub('%s+$','')
     if text=='' then return invalid('이름을 입력해 주세요.') end

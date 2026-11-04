@@ -5,6 +5,11 @@ from PIL import Image, ImageDraw, ImageFont
 
 ROOT = Path('work/patched')
 GAME = ROOT / 'game'
+if ROOT.exists():
+    expected=Path.cwd().resolve()/'work'/'patched'
+    if ROOT.is_symlink() or ROOT.resolve()!=expected:
+        raise ValueError('Refusing to clean an unexpected build-output path')
+    shutil.rmtree(ROOT)
 shutil.copytree('work/3ds', ROOT, dirs_exist_ok=True)
 MP = json.loads(Path('work/mapping.json').read_text(encoding='utf8'))
 STR = re.compile(r""""(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'""")

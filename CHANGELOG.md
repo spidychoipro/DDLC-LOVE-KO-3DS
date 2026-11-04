@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.2.2-beta — 2026-11-04
+
+- Ignore stale keyboard/touch state after returning from the native name keyboard.
+- Require a fresh X press or a touch starting inside the visible Skip button to skip.
+- Reset automatic advance, skip state, dialogue pages and scene timers on New Game.
+- Cap timer deltas after modal input and initialize the opening scene before drawing.
+- Add regression tests reproducing the original skip and checking 600 frames after modal return.
+- Clean generated build input between builds to keep ordinary dialogue font atlases small.
+- Preserve the CIA Title ID/save identity; increment CIA title version to 4.
+
+Azahar video was inspected; the new build has automated runtime tests but still needs interactive emulator and physical hardware verification.
+
 ## 0.2.1-beta — 2026-11-04
 
 - Removed the custom in-game keyboard and custom Hangul composition runtime.

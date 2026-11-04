@@ -1,6 +1,6 @@
 package.path='runtime/?.lua;work/patched/game/?.lua;'..package.path
 local opens,saves=0,0
-love={keyboard={setTextInput=function(enabled) assert(enabled==true);opens=opens+1 end}}
+love={timer={getTime=function() return 0 end},keyboard={isDown=function() return false end,setTextInput=function(enabled) assert(enabled==true);opens=opens+1 end}}
 function savepersistent() saves=saves+1 end
 function changeState(value,arg) state=value;mode=arg end
 function menu_enable(value) menu_type=value end
