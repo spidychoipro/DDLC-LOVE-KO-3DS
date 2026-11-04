@@ -1,0 +1,16 @@
+/inputs/
+/work/
+/dist/
+/.venv/
+__pycache__/
+*.pyc
+*.cia
+*.cxi
+*.3dsx
+*.cci
+*.3ds
+*.romfs
+*.rpa
+*.rpyc
+*.sav
+dspfirm.cdc

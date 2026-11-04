@@ -1,0 +1,28 @@
+{
+  "repo": "saber-nyan/ddlc-android",
+  "commit": "f2a1c25a534cf5ad55f071ddb355b7807106c56a",
+  "files": {
+    "poems.rpy": "4ec5de5ad64d2181e10e175de9cfc116235cc0c5fb6404a19ce54bed83d63b44",
+    "poems_special.rpy": "b39838e194e22169aa62714012d326e05e05507c66801a67f318f985ffc7b177",
+    "script-ch0.rpy": "8b9960547fc6fb01b30df87b615514dba4a86d46c5365e2bcea7bac7b44e8510",
+    "script-ch1.rpy": "f779bde875adab61c938209039ae10782c8ba98ad4ba320f895c66170051bb56",
+    "script-ch10.rpy": "7f9337ce7d3a0c6aa0e4d8e9be2b23dbad2ca7876c49d6617a3ec5c6632cf1c1",
+    "script-ch2.rpy": "29ece1c5f28f8aeacb9de96b1927e42d43a07094b61e8b34507208b461c419b5",
+    "script-ch20.rpy": "a1d5faf53e8c5fd939b6942599cc71f8ed3f5020b29c5374332ce23858c7c4ab",
+    "script-ch21.rpy": "5a03c785fe8f639c35191f5843976716872b809ec1cc72de80fd7ad61e2ca7e7",
+    "script-ch22.rpy": "42146c704221ad6e8422d44cd1abb8f934d55af20bf49be926983e2a06735a28",
+    "script-ch23.rpy": "5917f1abb6012e92471dd75c7f8d0f3a49eccc91f28791cfb55131a62eacba0e",
+    "script-ch3.rpy": "d370e1f561b435ee6d872e76457f7740bde8932d92df62c11a2a4877fcc8ef8a",
+    "script-ch30.rpy": "31f4ee91f2850ac83794f6239a097e73e527d950a59faa0c778774bd53775b0e",
+    "script-ch4.rpy": "29ba503ae6a31bd5e17087078179b576ee65e179d220a46146072ad2e96a54be",
+    "script-ch40.rpy": "7693b8fa371714bc98060f978fc64a0c7a2b482a1dc97f7733f9188a9d686266",
+    "script-ch5.rpy": "5a345a91a6298a39fe9bb1b981363c072c4dfaa9ca9a40805b5a6ea4a7f1e4c5",
+    "script-exclusives-natsuki.rpy": "d1262cebafc7f5f175df3ff2c05f41717e435434c584af94248edc7904ef6f5e",
+    "script-exclusives-sayori.rpy": "1a9d01995d0e9e9bc66596838a748bc2b37221e62bfdc94e9ce4250ab3559954",
+    "script-exclusives-yuri.rpy": "677cc9957447a6a202e5b54aec6e583a0943753016682f1f397c64274952a726",
+    "script-exclusives2-natsuki.rpy": "62a77a60e56491c631a8090240476a299f52b8107aeb71c9e24f3aba8720c32b",
+    "script-exclusives2-yuri.rpy": "006147d53c3f8bd897443175274791b8594a30c487296629fbcbe1b5198b5689",
+    "script-poemresponses.rpy": "57c0126f1761bbbed31ba46aafc1516d2ad6bdffae305e4df3a7e94b43814245",
+    "script-poemresponses2.rpy": "504057fd28d72fa1710d738bf9e299b0dc274a127a4e3a3bd1cf311396a1db84"
+  }
+}
