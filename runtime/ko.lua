@@ -4,6 +4,8 @@ local graphics = love.graphics
 local nativePrint, nativePrintf, nativeDraw = graphics.print, graphics.printf, graphics.draw
 local glyphs = require('ko_glyphs')
 local ui = require('ko_ui')
+local tutorialGlyphs = require('ko_tutorial_glyphs')
+local tutorialSheet, tutorialQuads
 local sheets, quads = {}, {}
 local pattern = '[%z\1-\127\194-\244][\128-\191]*'
 local dialog = {key=false, pages={}, page=1, reveal=false, text=''}
@@ -12,18 +14,6 @@ local poem = {text=false, pages={}, page=1}
 function K.reset()
     dialog={key=false,pages={},page=1,reveal=false,text=''}
     poem={text=false,pages={},page=1}
-end
-
-function K.drawPoemTutorial(alpha)
-    graphics.setColor(255,230,245,alpha)
-    graphics.rectangle('fill',0,0,400,240)
-    graphics.setColor(80,45,65,alpha)
-    graphics.printf('시를 써 볼 시간이에요!',20,38,360,'center')
-    graphics.printf('좋아하는 부원이 마음에 들어 할\n단어들을 골라 보세요.\n여러분의 시를 가장 좋아한 부원과는\n좋은 일이 생길지도 몰라요!',20,82,360,'center')
-    graphics.setColor(190,100,155,alpha)
-    graphics.rectangle('fill',168,182,64,24)
-    graphics.setColor(255,255,255,alpha)
-    graphics.printf('확인',168,187,64,'center')
 end
 
 function K.name(value)
@@ -177,6 +167,52 @@ function graphics.printf(text,x,y,limit,align,...)
         elseif align=='right' then offset=limit-K.width(line) end
         render(line,x+offset,y+(i-1)*14)
     end
+end
+
+-- Reuse the original 400x240 overlay, including the translucent surround,
+-- pink frame and original small-panel geometry. Replace text areas only.
+local function tutorialWidth(text)
+    local width=0
+    for char in text:gmatch(pattern) do width=width+(tutorialGlyphs[char] and tutorialGlyphs[char][4] or 4) end
+    return width
+end
+local function tutorialText(text,x,y)
+    if not tutorialSheet then
+        tutorialSheet=graphics.newImage('fonts/ko_tutorial.png')
+        tutorialSheet:setFilter('nearest','nearest');tutorialQuads={}
+    end
+    for char in text:gmatch(pattern) do
+        local g=tutorialGlyphs[char]
+        if g then
+            if char~=' ' then
+                if not tutorialQuads[char] then tutorialQuads[char]=graphics.newQuad(g[2],g[3],16,16,256,256) end
+                nativeDraw(tutorialSheet,tutorialQuads[char],x,y)
+            end
+            x=x+g[4]
+        end
+    end
+end
+function K.drawPoemTutorial(alpha,original)
+    graphics.setColor(255,255,255,alpha)
+    graphics.draw(original,0,0)
+    graphics.setColor(253,229,244,alpha)
+    graphics.rectangle('fill',112,82,176,16)
+    graphics.rectangle('fill',111,102,178,34)
+    graphics.rectangle('fill',190,142,20,15)
+    local function centered(text,y)
+        tutorialText(text,200-tutorialWidth(text)/2,y)
+    end
+    graphics.setColor(55,45,51,alpha)
+    centered('시를 써 볼 시간이에요!',86)
+    centered('좋아하는 부원이 좋아할 단어를 고르세요.',105)
+    centered('여러분의 시를 가장 좋아하는 부원과는',115)
+    centered('좋은 일이 생길지도 몰라요!',125)
+    graphics.setColor(190,89,154,alpha)
+    for dy=-1,1 do for dx=-1,1 do
+        if dx~=0 or dy~=0 then tutorialText('확인',200-tutorialWidth('확인')/2+dx,146+dy) end
+    end end
+    graphics.setColor(255,255,255,alpha)
+    centered('확인',146)
 end
 
 return K

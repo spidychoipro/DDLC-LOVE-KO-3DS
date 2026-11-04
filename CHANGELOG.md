@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.6-beta — 2026-11-04
+
+- Preserve the original poem tutorial overlay, small pink frame, layout and outlined confirmation label.
+- Replace only the English text areas with Korean, removing the full-screen redesign from 0.2.5.
+- Retain the poem-return fix and dialogue translations; CIA title version 8.
+
 ## 0.2.5-beta — 2026-11-04
 
 - Render the first poem-game tutorial in Korean instead of the English tutorial image.
