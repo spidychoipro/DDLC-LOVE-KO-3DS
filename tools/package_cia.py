@@ -92,7 +92,7 @@ def main():
     args=p.parse_args()
     cxi=args.output.with_suffix('.cxi')
     cxi.write_bytes(rebuild(args.template.read_bytes(),args.romfs.read_bytes(),0x0004000000DDFB00))
-    subprocess.run([str(args.makerom.resolve()),'-f','cia','-ignoresign','-content',str(cxi)+':0:0','-ver','5','-o',str(args.output)],check=True)
+    subprocess.run([str(args.makerom.resolve()),'-f','cia','-ignoresign','-content',str(cxi)+':0:0','-ver','6','-o',str(args.output)],check=True)
     assert extract_content(args.output.read_bytes())==cxi.read_bytes()
     print('Verified CIA content, NCCH header hashes and three RomFS hash levels:',args.output)
 

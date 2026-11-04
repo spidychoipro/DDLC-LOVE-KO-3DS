@@ -12,8 +12,10 @@ s=s.replace('\t--this acts as love.mousepressed', '''\tinput_guard.update(dt,mou
 \tend
 \t--this acts as love.mousepressed''',1)
 s=s.replace('function love.keypressed(key)','function love.keypressed(key)\n\tif not input_guard.keypressed(key) then return end',1)
+s=s.replace('function love.update(dt)', 'function love.update(dt)\n\tnative_nameentry.update()',1)
+s=s.replace('\nend\n\nfunction love.update(dt)', '\n\tnative_nameentry.sceneDrawn()\nend\n\nfunction love.update(dt)',1)
 p.write_text(s,encoding='utf8')
-p=G/'states/game.lua';s=p.read_text(encoding='utf8')
+p=G/'states/game.lua' ;s=p.read_text(encoding='utf8')
 a=s.index('\t--skipping');b=s.index('\tif menu_enabled == false and cl ~= 666 then',a)
 s=s[:a]+'''\t-- Skip must be deliberate, fresh input after returning from the keyboard.
 \tlocal canSkip = state == 'game' and not menu_enabled and not poem_enabled and not event_enabled and not input_guard.blocked()
@@ -29,6 +31,7 @@ s=s.replace("game_keypressed('a')","love.keypressed('a')",1)
 p.write_text(s,encoding='utf8')
 p=G/'menu.lua';s=p.read_text(encoding='utf8').replace('function menu_enable(m)','function menu_enable(m)\n\tinput_guard.cancelSkip()\n\tautotimer = 0',1);p.write_text(s,encoding='utf8')
 p=G/'resources.lua';s=p.read_text(encoding='utf8')
+s=s.replace('function audioUpdate(audiox, forceload) --audio changes', 'function audioUpdate(audiox, forceload) --audio changes\n\tif native_nameentry.queueAudio(audiox) then return end',1)
 s=s.replace('\tstate = cstate\nend', '''\tstate = cstate
 \tif cstate == 'game' and (x == 1 or x == 2 or x == 'autoload') then
 \t\tko.reset()

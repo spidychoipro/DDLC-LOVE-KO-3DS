@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.2.4-beta — 2026-11-04
+
+- Document the DDLC-only Azahar audio-stretching override for transient speed-up after native keyboard return; normal initial speed confirmed by the user.
+
+- Stop title music and clear its queued audio before opening the native name keyboard.
+- Defer music changes during name entry and scene loading until the first complete scene draw.
+- Start only the final requested scene track on the following update; avoid restarting title music during loading.
+- Restore title music normally when name entry is cancelled or rejected.
+- Verify the stop/queue/play order in the Azahar 2126.1.2 game engine and 600 gameplay frames; also open the release content in Azahar 2126.2.
+- Keep native timer APIs, title/save identity, input guard and system keyboard; CIA title version 6.
+
 ## 0.2.3-beta — 2026-11-04
 
 - Fix the launch crash introduced by replacing the native timer API in 0.2.2.
