@@ -42,13 +42,14 @@ Azahar 2126.2의 게임별 Audio stretching을 꺼서 자판 복귀 직후의 �
 ## 원본 파일 준비
 
 이 저장소에는 게임 전체, 번역 데이터 전체, 글꼴, Nintendo DSP 펌웨어, 개인 저장 데이터를 넣지 않습니다. 다음 파일은 각 배포처에서 직접 준비합니다.
-
 1. [DDLC-LOVE v1.1.9](https://github.com/LukeZGD/DDLC-LOVE/releases/tag/v1.1.9)의 `DDLC-3DS.zip`
 2. [두근두근 문예부 한국어화 패치](https://sites.google.com/view/dokidokikor)의 **1.2 일반 사용자용 normal ZIP**
 3. CIA를 만들 경우 같은 v1.1.9의 `DDLC-3DS.cia`
 4. [devkitPro](https://devkitpro.org/)의 `mkromfs3ds`, [Project_CTR makerom 0.19.0](https://github.com/3DSGuy/Project_CTR/releases/tag/makerom-v0.19.0)
 
 원본 DDLC는 [공식 사이트](https://ddlc.moe/)에서 받을 수 있습니다. 한국어 패치 제작진은 원 사이트 링크로 공유하도록 안내하고 있습니다. 이 저장소는 원본을 직접 준비한 사용자가 로컬에서 변환하는 방식입니다.
+
+소스 저장소에는 게임 자산을 넣지 않지만, [0.2.5-beta 릴리스](https://github.com/spidychoipro/DDLC-LOVE-KO-3DS/releases/tag/v0.2.5-beta)에는 로컬에서 빌드한 CIA·3DSX를 첨부해 두었습니다. 그 파일에는 게임 자산과 번역이 들어 있으니 다시 배포할 때는 원 배포처 정책을 확인해야 합니다.
 
 ## Windows 빌드
 
@@ -77,6 +78,14 @@ CIA가 필요 없으면 `--cia-template`과 `--makerom`을 생략합니다. `--l
 1. CIA를 SD 카드에 복사합니다.
 2. FBI에서 설치하고 홈 메뉴에서 실행합니다.
 3. 홈브루 사운드용 `sdmc:/3ds/dspfirm.cdc`가 준비되어 있는지 확인합니다. 본인의 기기에서 추출한 파일을 사용합니다.
+
+#### QR로 바로 설치
+
+FBI의 **Remote Install → Scan QR code**로 아래 QR을 읽으면 [v0.2.5-beta 릴리스](https://github.com/spidychoipro/DDLC-LOVE-KO-3DS/releases/tag/v0.2.5-beta)의 CIA를 바로 내려받아 설치합니다. 파일은 73MB입니다. QR을 읽기 어려우면 [설치 안내 페이지](docs/install-qr.html)를 열거나 릴리스에서 직접 받으면 됩니다.
+
+![DDLC-LOVE-KO-0.2.5.cia 설치 QR](docs/install-qr.png)
+
+같은 릴리스에 `3dsx`도 있습니다. 3DSX는 Homebrew Launcher나 Azahar에서 엽니다.
 
 CIA Title ID는 `0004000000DDFB00`, 제품 코드는 `CTR-P-DLKO`입니다. 원본 DDLC-3DS의 Title ID와 구분했습니다. 이 ID가 다른 모든 홈브루와 충돌하지 않는다고 보장하지는 않습니다.
 
