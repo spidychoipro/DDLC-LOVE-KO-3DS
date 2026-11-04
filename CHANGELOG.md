@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.2.5-beta — 2026-11-04
+
+- Render the first poem-game tutorial in Korean instead of the English tutorial image.
+- Prepare the next chapter before the first draw after poem completion and clear the previous background overlay.
+- Convert dialogue expressions starting with a player/name variable, fixing 35 remaining English sentences.
+- Audit all 9,943 static dialogue calls for ordinary English, allowing explicit names, paths and intentional glitch generators.
+- Add a regression reproducing the old first return frame and checking the actual next-chapter script.
+- CIA title version 7; retain the same Title ID and save identity.
+
 ## 0.2.4-beta — 2026-11-04
 
 - Document the DDLC-only Azahar audio-stretching override for transient speed-up after native keyboard return; normal initial speed confirmed by the user.

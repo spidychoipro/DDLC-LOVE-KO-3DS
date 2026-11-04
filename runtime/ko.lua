@@ -14,6 +14,18 @@ function K.reset()
     poem={text=false,pages={},page=1}
 end
 
+function K.drawPoemTutorial(alpha)
+    graphics.setColor(255,230,245,alpha)
+    graphics.rectangle('fill',0,0,400,240)
+    graphics.setColor(80,45,65,alpha)
+    graphics.printf('시를 써 볼 시간이에요!',20,38,360,'center')
+    graphics.printf('좋아하는 부원이 마음에 들어 할\n단어들을 골라 보세요.\n여러분의 시를 가장 좋아한 부원과는\n좋은 일이 생길지도 몰라요!',20,82,360,'center')
+    graphics.setColor(190,100,155,alpha)
+    graphics.rectangle('fill',168,182,64,24)
+    graphics.setColor(255,255,255,alpha)
+    graphics.printf('확인',168,187,64,'center')
+end
+
 function K.name(value)
     value = tostring(value or '')
     return ui[value] or value

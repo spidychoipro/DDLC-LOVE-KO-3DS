@@ -74,8 +74,8 @@ ui={
 'Now everyone can be happy.':'이제 모두 행복할 수 있어.',
 }
 p=G/'states/splash.lua';s=p.read_text(encoding='utf8')
-for old,new in ui.items():s=s.replace(old,new)
+for old,new in sorted(ui.items(),key=lambda item:len(item[0]),reverse=True):s=s.replace(old,new)
 p.write_text(s,encoding='utf8')
-p=G/'main.lua';s=p.read_text(encoding='utf8').replace("v0.3.1 KO-test2","KO 0.2.4-beta").replace("dvertype = 'Release'","dvertype = 'Beta'")
+p=G/'main.lua';s=p.read_text(encoding='utf8').replace("v0.3.1 KO-test2","KO 0.2.5-beta").replace("dvertype = 'Release'","dvertype = 'Beta'")
 p.write_text(s,encoding='utf8')
 print('Polished',len(parts),'poem fragments and',len(list(source.glob('*.png'))),'Korean special-poem images')

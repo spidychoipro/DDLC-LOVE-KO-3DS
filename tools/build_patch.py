@@ -80,8 +80,7 @@ for p in GAME.rglob('*.lua'):
         if si>=0 and spans[si][0]<=m.start()<spans[si][1]:continue
         if s[m.start():m.end()].rstrip().endswith(('"',"'")) and not s[m.start():].startswith('cw'):continue
         if start>=len(s):continue
-        if s[start] not in "\"'":continue
-        if not STR.match(s,start):continue
+        if s[start] not in "\"'" and not re.match(r"[A-Za-z_]",s[start]):continue
         shorthand=s[m.start():m.end()].strip() in ['bl','mc','s','n','y','m']
         if shorthand:
             end=STR.match(s,start).end()
