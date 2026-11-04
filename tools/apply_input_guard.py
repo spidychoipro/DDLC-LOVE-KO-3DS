@@ -4,7 +4,6 @@ G=Path('work/patched/game')
 shutil.copyfile('runtime/input_guard.lua',G/'input_guard.lua')
 p=G/'main.lua';s=p.read_text(encoding='utf8')
 s=s.replace("native_nameentry = require 'native_nameentry'","input_guard = require 'input_guard'\nnative_nameentry = require 'native_nameentry'",1)
-s=s.replace("require 'scripts.script'", "require 'scripts.script'\n\nlocal rawTimerDelta = love.timer.getDelta\nfunction love.timer.getDelta() return math.min(rawTimerDelta(), 0.1) end",1)
 s=s.replace('function love.update(dt)','function love.update(dt)\n\tdt = math.min(dt, 0.1)',1)
 s=s.replace('\t--this acts as love.mousepressed', '''\tinput_guard.update(dt,mouseDown,mouseX,mouseY)
 \tif not input_guard.touchAllowed() then
@@ -45,3 +44,10 @@ s=s.replace('\tstate = cstate\nend', '''\tstate = cstate
 \tend
 end''',1)
 p.write_text(s,encoding='utf8')
+
+# Keep native timer functions intact: the bundled engine expects native APIs.
+# Limit elapsed time only where the game consumes it.
+for p in G.rglob('*.lua'):
+    s=p.read_text(encoding='utf8')
+    if 'love.timer.getDelta()' in s:
+        p.write_text(s.replace('love.timer.getDelta()', 'math.min(love.timer.getDelta(), 0.1)'),encoding='utf8')

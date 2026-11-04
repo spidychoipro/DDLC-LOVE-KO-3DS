@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.2.3-beta — 2026-11-04
+
+- Fix the launch crash introduced by replacing the native timer API in 0.2.2.
+- Preserve native timer functions and clamp elapsed time at game call sites.
+- Keep the post-keyboard input guard and explicit skip behavior.
+- Add a regression assertion that the engine timer function remains unchanged.
+- Reproduced the 0.2.2 memory crash in Azahar 2126.1.2 and checked corrected startup plus 600 gameplay frames after the name callback.
+- CIA title version 5; existing title and save identity retained.
+
 ## 0.2.2-beta — 2026-11-04
 
 - Ignore stale keyboard/touch state after returning from the native name keyboard.

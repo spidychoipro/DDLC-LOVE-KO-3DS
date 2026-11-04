@@ -67,9 +67,9 @@ def main():
     data[smdh_offset:smdh_offset+smdh_size]=smdh_labels(data[smdh_offset:smdh_offset+smdh_size])
     data+=b'\0'*((-len(data))%4096)
     struct.pack_into('<I',data,40,len(data));data+=romfs.read_bytes()
-    (dist/'DDLC-LOVE-KO-0.2.2.3dsx').write_bytes(data)
+    (dist/'DDLC-LOVE-KO-0.2.3.3dsx').write_bytes(data)
     if args.cia_template:
-        subprocess.run([sys.executable,'tools/package_cia.py','--template',str(args.cia_template),'--romfs',str(romfs),'--makerom',str(args.makerom),'--output',str(dist/'DDLC-LOVE-KO-0.2.2.cia')],check=True)
+        subprocess.run([sys.executable,'tools/package_cia.py','--template',str(args.cia_template),'--romfs',str(romfs),'--makerom',str(args.makerom),'--output',str(dist/'DDLC-LOVE-KO-0.2.3.cia')],check=True)
     files=list(dist.glob('*.cia'))+list(dist.glob('*.3dsx'))
     (dist/'SHA256SUMS.txt').write_text(''.join(hashlib.sha256(f.read_bytes()).hexdigest()+'  '+f.name+'\n' for f in sorted(files)),encoding='ascii')
     print('Local build complete:',dist)

@@ -64,8 +64,10 @@ if old and patched then
             if name=='ko' then return {advance=function()return false end} end
             return true
         end
+        local nativeDelta=love.timer.getDelta
         entry();require=originalRequire
-        assert(love.timer.getDelta()==.1,'Modal elapsed time must not become a giant animation step')
+        assert(love.timer.getDelta==nativeDelta,'Do not replace the engine native timer function')
+        assert(love.timer.getDelta()==30,'Native timer must remain unmodified')
         menu_enabled=false;state='game';sfx1={play=function()end}
         down.x=false;down.b=true;guard.resume()
         love.keypressed('b');assert(autotimer==0)
@@ -80,3 +82,10 @@ if old and patched then
     print('PASS: baseline reproduced (line '..baseline..'); patched 600-frame modal return, deliberate skip, release and menu isolation')
 end
 print('PASS: modal quarantine, stale held keys, fresh X, touch origin, invisible lower strip, long dt')
+
+local resource=io.open('work/patched/game/resources.lua','r')
+if resource then
+ local source=resource:read('*a');resource:close()
+ assert(source:find('local dt = math.min(love.timer.getDelta(), 0.1)',1,true),'Cap delta at its game call site')
+end
+print('PASS: native timer identity preserved; elapsed time capped in game code')
