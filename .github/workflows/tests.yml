@@ -1,4 +1,4 @@
-name: Composition and source checks
+name: Native keyboard and source checks
 on: [push, pull_request, workflow_dispatch]
 permissions:
   contents: read
@@ -13,7 +13,6 @@ jobs:
         run: python3 -m compileall -q build.py tools
       - name: Check runtime Lua syntax
         run: find runtime -name '*.lua' -exec luac5.1 -p '{}' \;
-      - name: Test Hangul composition and name confirmation
+      - name: Test system keyboard name confirmation
         run: |
-          lua5.1 tests/test_hangul.lua
-          lua5.1 tests/test_nameinput.lua
+          lua5.1 tests/test_native_nameentry.lua

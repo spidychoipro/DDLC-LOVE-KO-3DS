@@ -55,7 +55,7 @@ def main():
     Path('work/menu-translations.json').write_text(json.dumps(menu,ensure_ascii=False),encoding='utf8')
     for name in ['align.py','resolve_alignment.py','build_patch.py','finalize_patch.py','apply_name_runtime.py','polish_content.py','rebuild_name_font.py']:run(name)
     if args.lua:
-        for test in ['test_hangul.lua','test_korean.lua','test_nameinput.lua']:
+        for test in ['test_korean.lua','test_native_nameentry.lua']:
             subprocess.run([str(args.lua),str(ROOT/'tests'/test)],check=True)
     dist=ROOT/'dist';dist.mkdir(exist_ok=True)
     romfs=ROOT/'work/korean.romfs'
@@ -67,9 +67,9 @@ def main():
     data[smdh_offset:smdh_offset+smdh_size]=smdh_labels(data[smdh_offset:smdh_offset+smdh_size])
     data+=b'\0'*((-len(data))%4096)
     struct.pack_into('<I',data,40,len(data));data+=romfs.read_bytes()
-    (dist/'DDLC-LOVE-KO-0.2.0.3dsx').write_bytes(data)
+    (dist/'DDLC-LOVE-KO-0.2.1.3dsx').write_bytes(data)
     if args.cia_template:
-        subprocess.run([sys.executable,'tools/package_cia.py','--template',str(args.cia_template),'--romfs',str(romfs),'--makerom',str(args.makerom),'--output',str(dist/'DDLC-LOVE-KO-0.2.0.cia')],check=True)
+        subprocess.run([sys.executable,'tools/package_cia.py','--template',str(args.cia_template),'--romfs',str(romfs),'--makerom',str(args.makerom),'--output',str(dist/'DDLC-LOVE-KO-0.2.1.cia')],check=True)
     files=list(dist.glob('*.cia'))+list(dist.glob('*.3dsx'))
     (dist/'SHA256SUMS.txt').write_text(''.join(hashlib.sha256(f.read_bytes()).hexdigest()+'  '+f.name+'\n' for f in sorted(files)),encoding='ascii')
     print('Local build complete:',dist)

@@ -15,4 +15,4 @@ No Nintendo keys, DSP firmware, ROM images, emulator profiles, user saves, accou
 
 The CIA packager uses the original decrypted homebrew executable and its permissions as a template. It updates metadata, title identifiers and RomFS hashes; it does not turn unsigned homebrew into an officially signed Nintendo title.
 
-The build tools are independent implementations of data extraction, Unicode Hangul composition and local container assembly. Copyright in the original game and Korean translation remains with the respective creators.
+The build tools are independent implementations of data extraction, UTF-8 name handling and local container assembly. Copyright in the original game and Korean translation remains with the respective creators.
