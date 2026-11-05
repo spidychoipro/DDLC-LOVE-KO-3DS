@@ -29,6 +29,6 @@ g.draw=function(...)
   glyphDraws=glyphDraws+1
  end
 end
-local K=require('ko');K.drawPoemTutorial(255,original)
+local K=require('ko');K.prepareTutorial();K.drawPoemTutorial(255,original)
 assert(backgroundDrawn and #rects==3 and glyphDraws>60)
 print('PASS: original overlay reused, small-panel geometry retained, outlined confirmation, native-size glyph drawing')

@@ -13,7 +13,7 @@ g.newQuad=function(x,y,w,h,sw,sh)
 end
 g.setColor=function() end
 g.rectangle=function() end
-ko=require('ko')
+ko=require('ko');ko.init()
 chapter=0;cl=1;unitimer=1;uniduration=.3
 textbox_enabled=true;menu_enabled=false;poem_enabled=false
 myTextStartTime=0
