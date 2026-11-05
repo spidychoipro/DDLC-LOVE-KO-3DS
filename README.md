@@ -1,194 +1,111 @@
-<div align="center">
+<p align="center">
   <img src="docs/banner.svg" alt="DDLC-LOVE 한국어판 · Nintendo 3DS" width="100%">
-  <br><br>
+</p>
+
+<p align="center">
   <a href="https://github.com/spidychoipro/DDLC-LOVE-KO-3DS/releases/latest"><img src="https://img.shields.io/github/v/release/spidychoipro/DDLC-LOVE-KO-3DS?style=flat-square&label=release&color=ff5c8a" alt="release"></a>
   <a href="https://github.com/spidychoipro/DDLC-LOVE-KO-3DS/actions/workflows/tests.yml"><img src="https://img.shields.io/github/actions/workflow/status/spidychoipro/DDLC-LOVE-KO-3DS/tests.yml?style=flat-square&label=checks" alt="checks"></a>
-  <img src="https://img.shields.io/badge/platform-Nintendo%203DS-e60012?style=flat-square" alt="platform">
-  <img src="https://img.shields.io/github/license/spidychoipro/DDLC-LOVE-KO-3DS?style=flat-square&color=a78bfa" alt="license">
-  <a href="https://github.com/spidychoipro/DDLC-LOVE-KO-3DS/releases"><img src="https://img.shields.io/github/downloads/spidychoipro/DDLC-LOVE-KO-3DS/total?style=flat-square&color=2ea043" alt="downloads"></a>
-</div>
-
-<br>
+  <a href="LICENSE"><img src="https://img.shields.io/github/license/spidychoipro/DDLC-LOVE-KO-3DS?style=flat-square&color=a78bfa" alt="license"></a>
+</p>
 
 > [!WARNING]
-> **비공식 개인 빌드입니다.** Team Salvato, LukeZGD, 한국어 패치 제작진과 무관하며 공식 배포판이 아닙니다.
-> 이 저장소에는 게임 본체, 번역 데이터, 글꼴, DSP 펌웨어, 세이브 파일이 들어 있지 않습니다. 원본은 각 배포처에서 직접 준비합니다.
+> 비공식 개인 빌드입니다. Team Salvato, LukeZGD, 한국어 패치 제작진과는 관계가 없으며 공식 배포판도 아닙니다. 이 저장소에는 게임 본체, 번역 데이터, 글꼴, DSP 펌웨어, 세이브 파일이 들어 있지 않습니다. 원본은 각 배포처에서 직접 준비해야 합니다.
 
-Nintendo 3DS용 [DDLC-LOVE](https://github.com/LukeZGD/DDLC-LOVE)에 기존 한국어 패치의 번역을 적용하는 로컬 빌드 도구입니다. 게임을 다시 그리지 않고, 원본 런타임 위에서 한글 출력과 이름 입력만 손봅니다.
+## 무엇을 하는 저장소인가
 
-현재 **0.2.7-beta**는 실제 3DS에 설치해 첫 실행 안내와 게임 진행이 정상인 것을 확인했습니다. Azahar에서도 같은 빌드가 동작합니다. 전체 루트와 엔딩을 끝까지 완주한 버전은 아닙니다.
+Nintendo 3DS용 [DDLC-LOVE](https://github.com/LukeZGD/DDLC-LOVE)에 기존 한국어 패치의 번역을 얹는 로컬 빌드 도구입니다. 게임을 새로 만들지 않고, LukeZGD의 Lua 포트와 LovePotion 런타임 위에서 한글 출력과 이름 입력만 손봅니다. 빌드는 전부 사용자 PC에서 돌아가며, 결과물은 `.cia`와 `.3dsx`입니다.
 
-## 목차
+번역 자체는 이 저장소에서 만들지 않습니다. 두근두근 문예부 한국어화 패치에 이미 있는 문장을 Lua 대사와 맞추고, 3DS 런타임이 그 문장을 그릴 수 있게 만드는 쪽입니다. 그래서 원본 게임과 한국어 패치를 직접 준비해야 빌드할 수 있습니다.
 
-| | | |
+## 왜 이 빌드가 필요한가
+
+DDLC-LOVE가 쓰는 LovePotion 1.0.9의 글꼴 처리는 바이트 단위로 동작합니다. UTF-8 한글 한 글자는 3바이트라서 그대로 넣으면 자모가 쪼개지거나 글자 폭이 어긋납니다. 기본 글꼴에도 한글 글리프가 없습니다. 한국어 패치는 Ren'Py용이라 3DS 쪽 Lua 대사와 바로 연결되지 않고, 시 튜토리얼은 이미지 안에 영어가 박혀 있습니다.
+
+이 저장소는 그 세 가지를 각각 처리합니다. UTF-8 경계를 지키는 렌더러와 한글 글꼴을 런타임에 넣고, 패치 문장을 Lua 호출에 대응시키고, 이미지의 글자 영역만 다시 그립니다. 원본 런타임의 타이머와 저장 식별자, 화면 구성은 건드리지 않는 쪽으로 맞췄습니다.
+
+| | 원본 DDLC-LOVE 1.1.9 | 이 저장소의 빌드 |
 |:--|:--|:--|
-| [미리보기](#미리보기) | [주요 기능](#주요-기능) | [지원-환경](#지원-환경) |
-| [설치](#설치) | [첫-실행](#첫-실행) | [이름-입력](#이름-입력) |
-| [저장-데이터](#저장-데이터) | [직접-빌드](#직접-빌드) | [검증-범위](#검증-범위) |
-| [문제-해결](#문제-해결) | [프로젝트-구조](#프로젝트-구조) | [FAQ](#faq) |
+| 대사 | 영어 | 한국어 패치 1.2 문장 |
+| 글꼴 | 라틴 문자 중심 | 현대 한글 11,172자 |
+| 이름 입력 | 게임 내 자판 | 3DS 기본 소프트웨어 키보드 |
+| 시 튜토리얼 | 영어 이미지 | 글자 영역만 한국어 |
 
-## 미리보기
+## 지금 상태
 
-<p align="center">
-  <img src="docs/install-qr.png" width="220" alt="DDLC-LOVE-KO CIA 설치 QR">
-</p>
-<p align="center">
-  <sub>FBI → Remote Install → Scan QR code 로 0.2.7-beta CIA(73MB)를 바로 설치한다.</sub>
-</p>
+현재 빌드는 0.2.7-beta입니다. 실제 3DS에 CIA를 설치해 첫 실행 안내(10016)가 한글로 뜨고 A로 게임이 시작되는 것까지 확인했습니다. Azahar에서도 같은 빌드가 정상 동작합니다.
 
-## 주요 기능
-
-<table>
-<tr>
-<td width="50%" valign="top">
-<b>한글 렌더러</b><br>
-구형 LovePotion의 바이트 단위 글꼴 출력을 보완해서 UTF-8 한글을 제대로 그린다.
-</td>
-<td width="50%" valign="top">
-<b>기본 소프트웨어 키보드</b><br>
-새 게임에서 3DS 시스템 자판을 직접 호출한다. 게임이 자판을 다시 그리지 않는다.
-</td>
-</tr>
-<tr>
-<td valign="top">
-<b>이름 글꼴 11,172자</b><br>
-현대 한글 완성형 전체를 이름 출력용으로 생성하고, 마지막 음절을 잘라내지 않는다.
-</td>
-<td valign="top">
-<b>대사 변환</b><br>
-기존 한국어 패치와 Lua 대사를 로컬에서 대응시킨다. 9,943개 호출의 영어 잔여 0건.
-</td>
-</tr>
-<tr>
-<td valign="top">
-<b>시·이미지 한국어화</b><br>
-일반 시와 특수 시 이미지의 글자 영역만 한글로 바꾼다.
-</td>
-<td valign="top">
-<b>패키징·검증</b><br>
-<code>.3dsx</code>와 <code>.cia</code>를 로컬에서 만들고 NCCH/RomFS 해시를 검사한다.
-</td>
-</tr>
-<tr>
-<td valign="top">
-<b>입력 가드</b><br>
-자판에서 돌아온 직후 남은 입력으로 자동 넘김·스킵이 걸리지 않게 정리한다.
-</td>
-<td valign="top">
-<b>진단 로그</b><br>
-첫 실행 단계와 글꼴 페이지를 <code>hardware-startup.log</code>에 남긴다.
-</td>
-</tr>
-</table>
-
-## 지원 환경
-
-| 구분 | 지원 | 비고 |
-|:--|:--:|:--|
-| 3DS / 3DS XL / 2DS | ✅ | CFW(Luma3DS) 필요 |
-| New 3DS / New 2DS XL | ✅ | Luma의 New 3DS CPU 강제 설정은 Off 권장 |
-| Azahar | ✅ | CIA 설치 또는 `.3dsx` 직접 실행 |
-| Citra | ⚠️ | 검증하지 않음 |
-| 홈브루 사운드 | ✅ | `sdmc:/3ds/dspfirm.cdc`를 본인 기기에서 추출 |
-| 전체 루트 완주 | ⏳ | 아직 확인하지 않음 |
+아직 확인하지 않은 부분도 분명히 적어 둡니다. 전체 루트와 엔딩을 끝까지 완주한 검증은 없습니다. 기기별 시스템 자판의 한/영 전환과 장시간 플레이에서의 메모리 사용도 추가 확인이 필요합니다. 확인되지 않은 항목을 확인된 것처럼 쓰지 않습니다.
 
 ## 설치
 
-<details open>
-<summary><b>CIA — FBI QR 설치 (권장)</b></summary>
+### CIA (권장)
 
-<br>
+FBI → Remote Install → Scan QR code로 아래 QR을 읽으면 0.2.7-beta CIA(73MB)를 바로 받아 설치합니다.
 
-1. 3DS에서 **FBI**를 실행한다.
-2. **Remote Install → Scan QR code**를 고른다.
-3. 화면의 QR을 3DS 카메라로 읽는다.
-4. 설치 확인 화면에서 **Yes**를 누른다.
-5. 홈 메뉴에서 실행한다.
+![DDLC-LOVE-KO CIA 설치 QR](docs/install-qr.png)
 
-QR 직링크: <https://github.com/spidychoipro/DDLC-LOVE-KO-3DS/releases/download/v0.2.7-beta/DDLC-LOVE-KO-0.2.7.cia>
+QR이 가리키는 주소: <https://github.com/spidychoipro/DDLC-LOVE-KO-3DS/releases/download/v0.2.7-beta/DDLC-LOVE-KO-0.2.7.cia>
 
-SD 카드로 넣으려면 릴리스에서 `DDLC-LOVE-KO-<버전>.cia`를 받아 **FBI → SD → Install and delete CIA**를 사용한다.
+SD 카드로 옮기는 경우에는 릴리스에서 `DDLC-LOVE-KO-0.2.7.cia`를 받아 FBI → SD → Install and delete CIA를 사용합니다.
 
-| 항목 | 값 |
-|:--|:--|
-| Title ID | `0004000000DDFB00` |
-| 제품 코드 | `CTR-P-DLKO` |
-| CIA title version | 9 |
-| 사운드 | `sdmc:/3ds/dspfirm.cdc` 필요 |
+- Title ID: `0004000000DDFB00`
+- 제품 코드: `CTR-P-DLKO`
+- CIA title version: 9
+- 사운드: `sdmc:/3ds/dspfirm.cdc`를 본인 기기에서 추출해 준비
 
-</details>
+CFW(Luma3DS)가 설치된 기기에서만 설치됩니다. 같은 Title ID를 쓰는 다른 홈브루가 있으면 충돌할 수 있습니다.
 
-<details>
-<summary><b>3DSX — Homebrew Launcher</b></summary>
+### 3DSX와 Azahar
 
-<br>
+`.3dsx` 파일에는 게임 데이터가 들어 있습니다. 실기에서는 SD 카드의 `/3ds/` 아래에 두고 Homebrew Launcher로 실행합니다. Azahar에서는 파일 열기로 `.3dsx`를 실행하거나 CIA를 설치합니다. 가상 SD에도 `dspfirm.cdc`가 필요합니다.
 
-1. `DDLC-LOVE-KO-<버전>.3dsx`를 SD 카드의 `/3ds/` 아래에 복사한다.
-2. Homebrew Launcher에서 실행한다.
-3. DSP 파일이 없으면 사운드가 나오지 않는다.
+### 처음 실행
 
-</details>
+첫 실행에서 10016번 안내가 한글로 표시되고 A를 누르면 게임이 시작됩니다. 0.2.6까지는 이 화면에서 멈추는 보고가 있었고, 0.2.7에서 원인을 고쳤습니다.
 
-<details>
-<summary><b>Azahar</b></summary>
-
-<br>
-
-CIA를 설치하거나 `.3dsx`를 파일 열기로 실행한다. 가상 SD에도 `dspfirm.cdc`가 필요하다. 처음 브금이 빨라지면 게임별 **Audio stretching**을 끈다. 자세한 내용은 [Azahar 사운드 안내](docs/AZAHAR_AUDIO.md)를 본다.
-
-</details>
-
-## 첫 실행
-
-첫 실행에서 10016번 안내가 한글로 나오고 <kbd>A</kbd>로 게임이 시작된다. 여기서 멈추던 문제가 0.2.7의 수정 대상이었고, 실제 3DS에서 해결된 것을 확인했다.
-
-멈춤이 다시 생기면 SD의 아래 파일에서 마지막으로 완료한 준비 단계를 확인한다.
+다시 멈추면 SD 카드의 아래 파일에서 마지막으로 끝난 준비 단계를 확인합니다.
 
 ```text
 sdmc:/3ds/data/LovePotion/DDLC-3DS-KO/hardware-startup.log
 ```
 
-로그에는 이름이나 저장 내용 대신 시작 단계와 글꼴 페이지 번호만 남는다.
+로그에는 이름이나 저장 내용 대신 시작 단계와 글꼴 페이지 번호만 남습니다.
 
 ## 이름 입력
 
-`새 게임`을 선택하면 **Nintendo 3DS 기본 소프트웨어 키보드**가 바로 열린다. 게임이 그리는 자판이나 별도 한글 조합기는 쓰지 않는다.
+새 게임을 선택하면 Nintendo 3DS 기본 소프트웨어 키보드가 바로 열립니다. 게임이 자판을 직접 그리거나 한글 조합기를 따로 돌리지 않습니다.
 
-- 한글·영문·혼합 이름을 UTF-8로 그대로 저장한다.
-- 최대 12글자이며, 마지막 한글 음절을 바이트 단위로 자르지 않는다.
-- 취소하면 타이틀 화면으로 돌아간다.
-- 따옴표·역슬래시·제어 문자는 저장 형식 보호를 위해 거부하고 안내를 띄운다.
+한글, 영문, 둘이 섞인 이름을 UTF-8 그대로 저장하고 마지막 한글 음절을 바이트 단위로 자르지 않습니다. 최대 12글자이고, 취소하면 타이틀 화면으로 돌아갑니다. 따옴표, 역슬래시, 제어 문자는 저장 형식을 깨뜨릴 수 있어서 거부하고 안내를 띄웁니다.
 
-> [!NOTE]
-> 한글 입력 페이지가 있는지는 기기에 설치된 시스템 키보드·지역·언어 환경에 따라 다르다. 이 게임이 다른 지역 자판에 한글 페이지를 추가하거나 시스템 자판을 교체하지는 않는다.
+자판에 한글 페이지가 있는지는 기기에 설치된 시스템 키보드와 지역·언어 설정에 따라 다릅니다. 이 빌드는 시스템 자판을 호출할 뿐, 다른 지역 자판에 한글 페이지를 추가하거나 자판 자체를 교체하지 않습니다.
 
 ## 저장 데이터
 
-이전 한국어 테스트본과 같은 `DDLC-3DS-KO` 식별자를 쓴다.
+이전 한국어 테스트본과 같은 `DDLC-3DS-KO` 식별자를 씁니다. 실제 경로는 아래와 같습니다.
 
 ```text
 sdmc:/3ds/data/LovePotion/DDLC-3DS-KO/
 ```
 
-업데이트 전에 이 폴더를 백업해 두는 게 좋다. 새 게임을 선택하면 이름 입력 후 처음부터 진행한다.
+업데이트해도 경로가 바뀌지 않지만, 새 CIA를 설치하기 전에 이 폴더를 백업해 두는 편이 안전합니다. 새 게임을 선택하면 이름 입력 뒤 처음부터 진행합니다.
 
 ## 직접 빌드
 
 ### 준비물
 
-| 파일 | 출처 |
-|:--|:--|
-| `DDLC-3DS.zip` | [DDLC-LOVE v1.1.9](https://github.com/LukeZGD/DDLC-LOVE/releases/tag/v1.1.9) |
-| `korean-normal-1.2.zip` | [두근두근 문예부 한국어화 패치](https://sites.google.com/view/dokidokikor) 1.2 일반 사용자용 |
-| `DDLC-3DS.cia` | 같은 v1.1.9 릴리스 (CIA 빌드용) |
-| `mkromfs3ds` | [devkitPro](https://devkitpro.org/) |
-| `makerom` | [Project_CTR makerom 0.19.0](https://github.com/3DSGuy/Project_CTR/releases/tag/makerom-v0.19.0) |
+이 저장소에는 게임 전체, 번역 데이터, 글꼴, Nintendo DSP 펌웨어, 개인 저장 데이터가 들어 있지 않습니다. 아래 파일은 각 배포처에서 직접 받아 준비합니다.
 
-원본 DDLC는 [공식 사이트](https://ddlc.moe/)에서 받는다. 한국어 패치 제작진이 원 사이트 링크 공유를 안내하므로, 원본을 직접 준비한 사용자가 로컬에서 변환하는 방식이다.
+- DDLC-LOVE v1.1.9의 `DDLC-3DS.zip` — <https://github.com/LukeZGD/DDLC-LOVE/releases/tag/v1.1.9>
+- 두근두근 문예부 한국어화 패치 1.2 일반 사용자용 ZIP — <https://sites.google.com/view/dokidokikor>
+- CIA를 만들 때는 같은 v1.1.9 릴리스의 `DDLC-3DS.cia`
+- `mkromfs3ds` — <https://devkitpro.org/>
+- `makerom` — <https://github.com/3DSGuy/Project_CTR/releases/tag/makerom-v0.19.0>
 
-### Windows
+원본 DDLC는 [공식 사이트](https://ddlc.moe/)에서 받습니다. 한국어 패치 제작진이 원 사이트 링크로 공유하도록 안내하고 있어서, 원본을 직접 준비한 사용자가 로컬에서 변환하는 방식입니다.
 
-Python 3.10 이상이 필요하다. 경로는 예시이니 자신의 파일 위치로 바꾸고, 공백이 있는 경로는 따옴표로 묶는다.
+### 빌드
+
+Python 3.10 이상이 필요합니다. 아래 경로는 예시이니 실제 파일 위치로 바꾸고, 공백이 있는 경로는 따옴표로 묶습니다.
 
 ```powershell
 python -m venv .venv
@@ -203,169 +120,79 @@ python -m venv .venv
   --fetch-reference
 ```
 
-<details>
-<summary><b>빌드 옵션</b></summary>
+`--fetch-reference`는 고정된 커밋의 영문 비교 텍스트를 내려받고 파일별 SHA-256을 검사합니다. 내려받은 Ren'Py 스크립트를 실행하지는 않습니다. 오프라인에서는 같은 파일을 담은 폴더를 `--reference-dir`로 지정합니다.
 
-<br>
-
-- `--fetch-reference`: 고정 커밋의 영문 비교 텍스트를 받고 파일별 SHA-256을 검사한다. Ren'Py 스크립트를 실행하지 않는다.
-- `--reference-dir`: 오프라인에서 같은 파일을 담은 폴더를 지정한다.
-- `--cia-template`, `--makerom`: CIA가 필요 없으면 둘 다 생략한다.
-- `--lua`: Lua 5.1 실행 파일을 지정하면 빌드 중 추가 검사를 실행한다.
-
-</details>
+CIA가 필요 없으면 `--cia-template`과 `--makerom`을 생략합니다. `--lua`에 Lua 5.1 실행 파일을 지정하면 빌드 중 추가 검사를 실행합니다.
 
 ### 결과물
 
-| 파일 | 용도 |
-|:--|:--|
-| `dist/DDLC-LOVE-KO-<버전>.cia` | CFW 3DS / Azahar 설치본 |
-| `dist/DDLC-LOVE-KO-<버전>.3dsx` | Homebrew Launcher / Azahar 실행본 |
-| `dist/SHA256SUMS.txt` | 생성 파일 검증값 |
+`dist/`에 세 파일이 생깁니다.
+
+- `DDLC-LOVE-KO-<버전>.cia` — CFW 3DS와 Azahar용 설치본
+- `DDLC-LOVE-KO-<버전>.3dsx` — Homebrew Launcher와 Azahar용 실행본
+- `SHA256SUMS.txt` — 위 두 파일의 SHA-256
 
 ## 검증 범위
 
-| 검사 | 상태 |
-|:--|:--:|
-| Lua 5.1 문법 | ✅ |
-| 현대 한글 11,172음절 글꼴 | ✅ |
-| 기본 자판 호출·이름 저장 콜백 | ✅ |
-| 취소·글자 수·잘못된 문자·중복 콜백 | ✅ |
-| UTF-8 표시·304px 줄바꿈·페이지 처리 | ✅ |
-| 대사 9,943개 영어 잔여 | ✅ 0건 |
-| CIA NCCH/RomFS 3단계 해시 | ✅ |
-| 그리기 콜백 내 GPU 업로드 금지 | ✅ |
-| 실기 첫 실행·게임 진행 | ✅ 사용자 확인 |
-| Azahar 동작 | ✅ |
-| 전체 분기·엔딩·장시간 메모리 | ⏳ 미확인 |
+빌드와 CI에서 아래 항목을 검사합니다.
 
-> [!IMPORTANT]
-> 확인하지 않은 항목을 완료로 표기하지 않는다. 전체 루트 완주 전에는 "완전 검증된 정식판"이라고 부르지 않는다.
+- Lua 5.1 문법 (47개 파일)
+- 현대 한글 11,172음절 글꼴 생성과 표시
+- 기본 자판 호출, 한글·영문·혼합 이름, 마지막 음절, 저장 콜백
+- 취소, 글자 수 제한, 잘못된 문자, 중복 콜백
+- UTF-8 표시, 304픽셀 줄바꿈, 대사·시 페이지 처리
+- 대사 9,943개 호출의 일반 영어 잔여 (0건)
+- CIA의 NCCH 헤더와 3단계 RomFS 해시
+- 그리기 콜백 안에서 GPU 글꼴 업로드나 쿼드 할당이 없는지
+
+여기에 더해 실제 3DS에서 첫 실행과 게임 진행을 확인했고, Azahar에서도 같은 빌드를 실행했습니다. 전체 루트·엔딩·장시간 메모리는 아직 검증하지 않았습니다.
+
+## 기술 노트
+
+### 첫 실행 멈춤 (0.2.7)
+
+0.2.6까지는 실기 최초 실행에서 10016번 안내가 빈 대사창과 검은 위 화면으로 멈추는 보고가 있었습니다. 재부팅하면 HOME과 다른 게임은 정상으로 돌아왔기 때문에 기기 문제가 아니라 빌드 쪽 문제로 봤습니다.
+
+원인은 한글을 그리는 도중에 글꼴 텍스처를 GPU로 올리던 경로였습니다. 0.2.7은 텍스처와 쿼드 준비를 초기화·업데이트 단계로 옮기고, 그리기 콜백에서는 이미 준비된 자원만 씁니다. 글꼴 아틀라스는 256x256 페이지로 나눴습니다. 일반 글꼴 5페이지가 1.25MiB, 안내 글꼴이 0.25MiB이고, 이름에 드문 글자가 필요하면 업데이트 중에 추가로 준비합니다.
+
+같은 실수가 다시 들어가지 않도록 그리기 콜백 안에서 GPU 업로드와 쿼드 할당을 금지하는 회귀 검사를 넣었습니다. 시작 단계는 `hardware-startup.log`에 남겨서 실기에서 어디까지 진행됐는지 볼 수 있게 했습니다.
+
+### 자판에서 돌아온 직후 입력
+
+기본 자판을 닫은 직후에는 키와 터치 상태가 남아 있어서 대화가 저절로 넘어가거나 스킵이 걸리는 문제가 있었습니다. 0.2.2부터는 자판에서 돌아온 뒤 새 X 입력이나 Skip 버튼 안에서 시작한 터치만 스킵으로 인정합니다. 새 게임을 시작할 때 자동 넘김, 스킵 상태, 대사 페이지, 씬 타이머도 함께 초기화합니다.
+
+### 사운드
+
+이름 입력을 열기 전에 타이틀 음악을 멈추고 대기 중인 오디오를 비웁니다. 음악 변경은 첫 씬이 완전히 그려질 때까지 미루고, 그 다음 업데이트에서 마지막으로 요청된 트랙만 재생합니다. 이름 입력을 취소하면 타이틀 음악을 원래대로 되돌립니다.
+
+Azahar에서는 자판을 닫은 직후 브금이 잠깐 빨라졌다가 정상으로 돌아오는 현상이 있었습니다. 이 게임의 게임별 Audio stretching을 끄면 사라집니다. 자세한 절차는 [docs/AZAHAR_AUDIO.md](docs/AZAHAR_AUDIO.md)에 있습니다.
 
 ## 문제 해결
 
-<details>
-<summary><b>첫 실행에서 10016 안내가 멈춤</b></summary>
+- 첫 실행에서 10016 안내가 멈추면 새 CIA로 업데이트하고 다시 실행합니다. 세이브는 지우지 않아도 됩니다. New 3DS/XL에서 Luma의 New 3DS CPU를 Clock+L2나 L2로 강제했다면 Off로 두고 확인합니다.
+- Azahar에서 브금이 처음에 빨라지면 게임별 Audio stretching을 끕니다. Title ID `0004000000DDFB00`에만 적용합니다.
+- 한글 자판이 보이지 않으면 기기의 지역·언어 설정과 설치된 시스템 키보드를 확인합니다. 이 빌드가 자판을 추가하지는 않습니다.
+- 설치가 되지 않으면 CFW(Luma3DS), FBI 버전, SD 카드 여유 공간, CIA 다운로드 완료 여부를 확인합니다. 릴리스의 `SHA256SUMS.txt`와 해시를 비교합니다.
+- 소리가 나지 않으면 `sdmc:/3ds/dspfirm.cdc`가 있는지 확인합니다. 본인 기기에서 추출한 파일이어야 합니다.
 
-<br>
-
-0.2.7에서 수정된 증상이다. 새 CIA로 업데이트하고 재실행한다. 기존 세이브는 지우지 않는다. New 3DS/XL에서 Luma의 **New 3DS CPU**를 `Clock+L2` 또는 `L2`로 강제했다면 `Off`로 두고 확인한다. 그래도 멈추면 `hardware-startup.log`의 마지막 단계를 확인한다.
-
-</details>
-
-<details>
-<summary><b>브금이 처음에 빨라짐 (Azahar)</b></summary>
-
-<br>
-
-Azahar의 게임별 **Audio stretching**을 끈다. 이 게임(Title ID `0004000000DDFB00`)에만 적용한다. 자세한 내용은 [docs/AZAHAR_AUDIO.md](docs/AZAHAR_AUDIO.md).
-
-</details>
-
-<details>
-<summary><b>한글 자판이 안 보임</b></summary>
-
-<br>
-
-이 빌드는 3DS 시스템 자판을 호출한다. 자판에 한글 페이지가 있는지는 기기 지역·언어 설정에 달려 있다. Azahar에서는 호스트 입력기와 에뮬레이터 입력창 동작에 영향을 받는다.
-
-</details>
-
-<details>
-<summary><b>설치가 안 됨</b></summary>
-
-<br>
-
-CFW(Luma3DS)가 필요하다. FBI가 최신인지, SD 카드에 여유 공간이 있는지, CIA 다운로드가 끝까지 됐는지 확인한다. 릴리스의 `SHA256SUMS.txt`와 해시를 비교한다.
-
-</details>
-
-<details>
-<summary><b>소리가 안 남</b></summary>
-
-<br>
-
-`dspfirm.cdc`가 `sdmc:/3ds/dspfirm.cdc`에 있어야 한다. 본인 기기에서 추출한 파일을 사용한다.
-
-</details>
-
-## 프로젝트 구조
+## 저장소 구조
 
 ```text
 .
-├─ runtime/                 한글 렌더러, 기본 자판 이름 입력, 입력 가드
-├─ tools/                   추출, 번역 대응, 글꼴·이미지 변환, 패키징
-├─ tests/                   Lua 회귀 검사
-├─ docs/                    설치 QR, 실기 대응, 사운드 안내
-├─ build.py                 전체 로컬 빌드 절차
-└─ .github/workflows/       원본 게임 없이 도는 소스·조합 검사
+├─ runtime/     한글 렌더러, 기본 자판 이름 입력, 입력 가드
+├─ tools/       추출, 번역 대응, 글꼴·이미지 변환, 패키징
+├─ tests/       Lua 회귀 검사
+├─ docs/        설치 QR, 실기 대응 기록, 사운드 안내
+├─ build.py     전체 로컬 빌드 절차
+└─ .github/     원본 게임 없이 도는 소스 검사
 ```
 
-## FAQ
+## 크레딧과 라이선스
 
-<details>
-<summary><b>공식 배포판인가요?</b></summary>
+원작은 Team Salvato의 DDLC이고, 3DS용 Lua 포트는 LukeZGD가 만들었습니다. 런타임은 LovePotion 1.0.9를 씁니다. 한국어 번역과 글꼴은 두근두근 문예부 한국어화 패치 제작진의 것입니다.
 
-<br>
+이 저장소의 코드에는 GPL-3.0을 적용합니다. 다만 게임 자산, 번역, 글꼴, Nintendo 데이터의 권리까지 GPL로 바뀌는 것은 아닙니다. 포함 관계와 빌드 출처는 [THIRD_PARTY.md](THIRD_PARTY.md)에 정리해 두었습니다.
 
-아니다. 비공식 개인 빌드 도구이고, 원작·Lua 포트·한국어 패치 제작진과 무관하다.
+버그나 불편은 [Issues](https://github.com/spidychoipro/DDLC-LOVE-KO-3DS/issues)에 남겨 주시면 됩니다. 실기 증상이면 기기 종류, Luma 버전, CIA title version, `hardware-startup.log` 마지막 줄을 같이 적으면 원인을 좁히기 쉽습니다. 코드 변경은 브랜치를 따서 PR로 올리면 됩니다.
 
-</details>
-
-<details>
-<summary><b>롬이나 게임 파일을 배포하나요?</b></summary>
-
-<br>
-
-아니다. 이 저장소에는 도구와 런타임 수정만 있다. 게임 자산과 번역은 원 배포처에서 직접 준비한다.
-
-</details>
-
-<details>
-<summary><b>번역은 다 됐나요?</b></summary>
-
-<br>
-
-정적 대사 9,943개에서 일반 영어 잔여는 0건이다. 다만 전체 루트와 엔딩을 실기에서 완주한 검증은 아직 없다.
-
-</details>
-
-<details>
-<summary><b>세이브가 사라졌어요</b></summary>
-
-<br>
-
-같은 `DDLC-3DS-KO` 식별자를 쓰므로 업데이트로 경로가 바뀌지는 않는다. 업데이트 전에 백업한 폴더가 있으면 되돌린다.
-
-</details>
-
-<details>
-<summary><b>다른 3DS 게임에도 쓸 수 있나요?</b></summary>
-
-<br>
-
-아니다. DDLC-LOVE의 런타임과 이 게임의 대사 구조에 맞춘 수정이다.
-
-</details>
-
-## 기여 · 버그 제보
-
-- 버그나 불편은 [Issues](https://github.com/spidychoipro/DDLC-LOVE-KO-3DS/issues)에 남긴다.
-- 실기 증상은 기기 종류, CFW/Luma 버전, CIA title version, `hardware-startup.log` 마지막 줄을 같이 적으면 빨리 좁힐 수 있다.
-- 코드 변경은 브랜치를 따서 PR로 올린다. `main` 직접 커밋은 피한다.
-
-## 출처와 라이선스
-
-| 대상 | 출처 |
-|:--|:--|
-| 원작 | Team Salvato / [DDLC](https://ddlc.moe/) |
-| Lua 포트 | [LukeZGD/DDLC-LOVE](https://github.com/LukeZGD/DDLC-LOVE) |
-| 3DS 런타임 | [LovePotion 1.0.9](https://github.com/lovebrew/lovepotion/tree/1.0.9) |
-| 한국어 번역·글꼴 | [원 패치 배포처](https://sites.google.com/view/dokidokikor) |
-
-이 저장소의 코드에는 **GPL-3.0**을 적용한다. 게임 자산·번역·글꼴·Nintendo 데이터에 대한 권리를 GPL로 바꾸는 것은 아니다. 포함 관계와 빌드 출처는 [THIRD_PARTY.md](THIRD_PARTY.md)를 확인한다.
-
-<div align="center">
-  <br>
-  <sub>DDLC-LOVE 한국어판 · 비공식 개인 빌드 · <a href="https://github.com/spidychoipro/DDLC-LOVE-KO-3DS/releases/latest">최신 릴리스</a> · <a href="CHANGELOG.md">변경 이력</a></sub>
-</div>
+DDLC-LOVE 한국어판 · 비공식 개인 빌드 · [최신 릴리스](https://github.com/spidychoipro/DDLC-LOVE-KO-3DS/releases/latest) · [변경 이력](CHANGELOG.md)
