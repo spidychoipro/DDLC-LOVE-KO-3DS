@@ -3,6 +3,7 @@ local K = {}
 local graphics = love.graphics
 local nativePrint, nativePrintf, nativeDraw = graphics.print, graphics.printf, graphics.draw
 local glyphs = require('ko_glyphs')
+local fontConfig = require('ko_font_config')
 local ui = require('ko_ui')
 local tutorialGlyphs = require('ko_tutorial_glyphs')
 local tutorialSheet, tutorialQuads
@@ -130,6 +131,61 @@ function K.drawPoem()
     graphics.print(tostring(poem.page)..' / '..#poem.pages..'  A: 다음',45,222)
 end
 
+local startupLog=''
+function K.trace(message)
+    startupLog=startupLog..tostring(message)..'\n'
+    if love.filesystem and love.filesystem.write then
+        pcall(love.filesystem.write,'hardware-startup.log',startupLog)
+    end
+end
+local function loadSheet(page)
+    if sheets[page] then return end
+    K.trace('font upload begin '..page)
+    local sheet=graphics.newImage('fonts/ko'..page..'.png')
+    sheet:setFilter('nearest','nearest');sheets[page]=sheet
+    K.trace('font upload ready '..page)
+end
+local function prepareGlyph(char,g)
+    loadSheet(g[1])
+    if char~=' ' and not quads[char] then
+        quads[char]=graphics.newQuad(g[2],g[3],16,16,fontConfig.size,fontConfig.size)
+    end
+end
+function K.prepare(text)
+    for char in tostring(text or ''):gmatch(pattern) do
+        local g=glyphs[char]
+        if g then prepareGlyph(char,g) end
+    end
+end
+function K.prepareTutorial()
+    if tutorialSheet then return end
+    K.trace('tutorial font upload begin')
+    tutorialSheet=graphics.newImage('fonts/ko_tutorial.png')
+    tutorialSheet:setFilter('nearest','nearest');tutorialQuads={}
+    for char,g in pairs(tutorialGlyphs) do
+        if char~=' ' then tutorialQuads[char]=graphics.newQuad(g[2],g[3],16,16,256,256) end
+    end
+    K.trace('tutorial font upload ready')
+end
+function K.init()
+    startupLog=''
+    K.trace('KO 0.2.7 font initialization outside draw')
+    for page=1,fontConfig.base_pages do loadSheet(page) end
+    for char,g in pairs(glyphs) do
+        if g[1]<=fontConfig.base_pages then prepareGlyph(char,g) end
+    end
+    K.prepareTutorial()
+    K.trace('font initialization complete')
+end
+local lastPreparedState
+function K.prepareFrame()
+    K.prepare(player);K.prepare(ct)
+    if poem_enabled then K.prepare(poemtext) end
+    local current=tostring(state)..':'..tostring(cl)
+    if not lastPreparedState or (state=='newgame' and current~=lastPreparedState) then
+        lastPreparedState=current;K.trace('update ready '..current)
+    end
+end
 local function render(text,x,y)
     local origin=x
     for char in text:gmatch(pattern) do
@@ -138,12 +194,11 @@ local function render(text,x,y)
             local g=glyphs[char] or glyphs['?']
             if g then
                 if char~=' ' then
-                    if not sheets[g[1]] then
-                        sheets[g[1]]=graphics.newImage('fonts/ko'..g[1]..'.png')
-                        sheets[g[1]]:setFilter('nearest','nearest')
-                    end
-                    if not quads[char] then quads[char]=graphics.newQuad(g[2],g[3],16,16,512,512) end
-                    nativeDraw(sheets[g[1]],quads[char],x,y)
+                    -- Draw only prepared GPU resources. Never upload a texture
+                    -- or allocate a quad from inside the native draw callback.
+                    local q=quads[char]
+                    if not sheets[g[1]] or not q then g=glyphs['?'];q=quads['?'] end
+                    if g and q and sheets[g[1]] then nativeDraw(sheets[g[1]],q,x,y) end
                 end
                 x=x+g[4]
             end
@@ -177,15 +232,11 @@ local function tutorialWidth(text)
     return width
 end
 local function tutorialText(text,x,y)
-    if not tutorialSheet then
-        tutorialSheet=graphics.newImage('fonts/ko_tutorial.png')
-        tutorialSheet:setFilter('nearest','nearest');tutorialQuads={}
-    end
+    if not tutorialSheet then return end
     for char in text:gmatch(pattern) do
         local g=tutorialGlyphs[char]
         if g then
             if char~=' ' then
-                if not tutorialQuads[char] then tutorialQuads[char]=graphics.newQuad(g[2],g[3],16,16,256,256) end
                 nativeDraw(tutorialSheet,tutorialQuads[char],x,y)
             end
             x=x+g[4]

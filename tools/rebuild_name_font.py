@@ -15,13 +15,20 @@ fontpath='work/kr-unpacked/gui/font/Aller_Rg.ttf'
 font=ImageFont.truetype(fontpath,12);cmap=TTFont(fontpath).getBestCmap()
 missing=[c for c in allchars if ord(c) not in cmap]
 assert not missing,missing
+atlas_size=256
+columns=atlas_size//16
+per_page=columns*columns
+base_pages=(len(base)+per_page-1)//per_page
 glyphs={}
-for page,offset in enumerate(range(0,len(allchars),1024),1):
-    im=Image.new('RGBA',(512,512),(255,255,255,0));draw=ImageDraw.Draw(im)
-    for i,c in enumerate(allchars[offset:offset+1024]):
-        x=(i%32)*16;y=(i//32)*16
+for page,offset in enumerate(range(0,len(allchars),per_page),1):
+    im=Image.new('RGBA',(atlas_size,atlas_size),(255,255,255,0));draw=ImageDraw.Draw(im)
+    for i,c in enumerate(allchars[offset:offset+per_page]):
+        x=(i%columns)*16;y=(i//columns)*16
         draw.text((x,y-2),c,font=font,fill='white')
         glyphs[c]=[page,x,y,max(1,round(font.getlength(c)))]
     im.save(g/'fonts'/f'ko{page}.png')
 (g/'ko_glyphs.lua').write_text('return {\n'+''.join('['+json.dumps(c,ensure_ascii=False)+']={'+','.join(map(str,v))+'},\n' for c,v in glyphs.items())+'}\n',encoding='utf8')
 print('Glyphs:',len(glyphs),'atlas pages:',page,'Hangul syllables:',11172)
+
+(g/'ko_font_config.lua').write_text('return {size='+str(atlas_size)+',base_pages='+str(base_pages)+',pages='+str(page)+'}\n',encoding='utf8')
+print('Initial font texture bytes:',base_pages*atlas_size*atlas_size*4)

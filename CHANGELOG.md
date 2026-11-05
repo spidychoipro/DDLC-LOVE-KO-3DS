@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.2.7-beta — 2026-11-06
+
+- Address the hardware-only first Korean warning freeze candidate by preparing font textures and quads before draw callbacks.
+- Split the glyph atlas into 256x256 pages; preload ordinary text using 1.25 MiB plus the 0.25 MiB tutorial font.
+- Prepare uncommon name glyphs during update and use prepared resources only during rendering.
+- Add a regression forbidding GPU font uploads and quad allocation inside draw, plus a first-run startup log.
+- Preserve title/save identity; CIA title version 9.
+- Confirm on physical 3DS: the first Korean warning 10016 renders and A advances into the game; the same build runs in Azahar. Full-route completion remains unverified.
+
 ## 0.2.6-beta — 2026-11-04
 
 - Preserve the original poem tutorial overlay, small pink frame, layout and outlined confirmation label.
