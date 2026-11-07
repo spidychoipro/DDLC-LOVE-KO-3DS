@@ -76,6 +76,6 @@ ui={
 p=G/'states/splash.lua';s=p.read_text(encoding='utf8')
 for old,new in sorted(ui.items(),key=lambda item:len(item[0]),reverse=True):s=s.replace(old,new)
 p.write_text(s,encoding='utf8')
-p=G/'main.lua';s=p.read_text(encoding='utf8').replace("v0.3.1 KO-test2","KO 0.2.7-beta").replace("dvertype = 'Release'","dvertype = 'Beta'")
+p=G/'main.lua';s=p.read_text(encoding='utf8').replace("v0.3.1 KO-test2","KO 0.2.9-beta").replace("dvertype = 'Release'","dvertype = 'Beta'")
 p.write_text(s,encoding='utf8')
 print('Polished',len(parts),'poem fragments and',len(list(source.glob('*.png'))),'Korean special-poem images')
