@@ -169,7 +169,7 @@ function K.prepareTutorial()
 end
 function K.init()
     startupLog=''
-    K.trace('KO 0.2.7 font initialization outside draw')
+    K.trace('KO 0.2.9 font initialization outside draw')
     for page=1,fontConfig.base_pages do loadSheet(page) end
     for char,g in pairs(glyphs) do
         if g[1]<=fontConfig.base_pages then prepareGlyph(char,g) end
@@ -177,8 +177,28 @@ function K.init()
     K.prepareTutorial()
     K.trace('font initialization complete')
 end
+-- Crop the moving background before submitting it to the old 3DS renderer.
+-- Avoid fractional, negative screen vertices and sampling the padded image edge.
+local backgroundQuads={}
+local backgroundQuad
+function K.prepareBackground()
+    if not background_Image then return end
+    local x=math.max(0,math.min(80,-math.floor(posX or 0)))+1
+    local y=math.max(0,math.min(80,-math.floor(posY or 0)))+1
+    local key=x..':'..y
+    if not backgroundQuads[key] then
+        backgroundQuads[key]=graphics.newQuad(x,y,400,240,512,512)
+    end
+    backgroundQuad=backgroundQuads[key]
+end
+function K.drawBackground()
+    if background_Image and backgroundQuad then
+        nativeDraw(background_Image,backgroundQuad,0,0)
+    end
+end
 local lastPreparedState
 function K.prepareFrame()
+    K.prepareBackground()
     K.prepare(player);K.prepare(ct)
     if poem_enabled then K.prepare(poemtext) end
     local current=tostring(state)..':'..tostring(cl)
