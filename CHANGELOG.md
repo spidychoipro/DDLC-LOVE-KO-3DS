@@ -1,3 +1,8 @@
+## 0.2.8-beta (2026-11-06)
+- 실기 영상의 메뉴 위 검은 선 대응: 일반 UI의 움직이는 배경을 화면 크기 쿼드로 잘라 정수 좌표에 그립니다.
+- 배경 원본 가장자리를 1픽셀 안쪽으로 피하고, 쿼드는 업데이트에서 준비/재사용합니다.
+- 0.2.7 시작 정지는 사용자 실기에서 해결 확인. 이번 검은 선 수정은 실기 재확인 필요.
+
 # Changelog
 
 ## 0.2.7-beta — 2026-11-06
@@ -6,8 +11,7 @@
 - Split the glyph atlas into 256x256 pages; preload ordinary text using 1.25 MiB plus the 0.25 MiB tutorial font.
 - Prepare uncommon name glyphs during update and use prepared resources only during rendering.
 - Add a regression forbidding GPU font uploads and quad allocation inside draw, plus a first-run startup log.
-- Preserve title/save identity; CIA title version 9.
-- Confirm on physical 3DS: the first Korean warning 10016 renders and A advances into the game; the same build runs in Azahar. Full-route completion remains unverified.
+- Preserve title/save identity; CIA title version 9. Physical-device confirmation remains required.
 
 ## 0.2.6-beta — 2026-11-04
 

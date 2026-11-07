@@ -17,7 +17,7 @@ enable_audio_stretching\default=false
 enable_audio_stretching=false
 ```
 
-3DSX 실행본은 실행 항목의 게임별 설정을 별도로 확인해야 할 수 있습니다. 이 PC에서 최종 확인한 설치본은 위 Title ID의 0.2.7 CIA입니다.
+3DSX 실행본은 실행 항목의 게임별 설정을 별도로 확인해야 할 수 있습니다. 이 PC에서 최종 확인한 설치본은 위 Title ID의 0.2.8 CIA입니다.
 
 ## 원인과 검증 범위
 
