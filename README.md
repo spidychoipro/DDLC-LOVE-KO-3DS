@@ -17,7 +17,7 @@ Nintendo 3DS용 [DDLC-LOVE](https://github.com/LukeZGD/DDLC-LOVE)에 기존 한�
 
 번역은 이 저장소에서 만들지 않습니다. 두근두근 문예부 한국어화 패치에 이미 있는 문장을 Lua 대사와 맞추고, 3DS 런타임이 그 문장을 그릴 수 있게 만드는 쪽입니다. 그래서 원본 게임과 한국어 패치를 직접 준비해야 빌드할 수 있습니다.
 
-현재 빌드는 0.2.9-beta입니다. 0.2.7에서 실제 3DS 첫 실행 안내와 게임 진행을 확인했고, 이후 빌드는 그 경로를 유지합니다. Azahar에서도 같은 빌드가 동작합니다. 전체 루트와 엔딩 완주, 기기별 한글 자판, 장시간 메모리는 아직 확인하지 않았습니다.
+현재 빌드는 0.2.9-beta입니다. 0.2.7에서 실제 3DS 첫 실행 안내와 게임 진행을 확인했고, 이후 빌드는 그 경로를 유지합니다. 에뮬레이터는 PC판 Azahar에서만 확인했습니다. 전체 루트와 엔딩 완주, 기기별 한글 자판, 장시간 메모리는 아직 확인하지 않았습니다.
 
 ## 원본과 다른 점
 
@@ -38,8 +38,8 @@ DDLC-LOVE가 쓰는 LovePotion 1.0.9의 글꼴 처리는 바이트 단위로 동
 
 | 파일 | 쓰는 곳 | 함께 필요한 것 |
 |:--|:--|:--|
-| `DDLC-LOVE-KO-0.2.9.cia` | CFW 3DS, Azahar | Luma3DS, FBI, `dspfirm.cdc` |
-| `DDLC-LOVE-KO-0.2.9.3dsx` | Homebrew Launcher, Azahar | `dspfirm.cdc` |
+| `DDLC-LOVE-KO-0.2.9.cia` | CFW 3DS, PC판 Azahar | Luma3DS, FBI, `dspfirm.cdc` |
+| `DDLC-LOVE-KO-0.2.9.3dsx` | Homebrew Launcher, PC판 Azahar | `dspfirm.cdc` |
 | `SHA256SUMS.txt` | 내려받은 파일 검증 | — |
 
 릴리스에는 위 파일과 소스 ZIP이 함께 있습니다. 항상 최신 릴리스의 파일을 받습니다. 이전 버전은 실기 확인 결과가 다를 수 있습니다.
@@ -64,7 +64,9 @@ CFW(Luma3DS)가 설치된 기기에서만 설치됩니다. 같은 Title ID를 �
 
 ### 3DSX와 Azahar
 
-`.3dsx` 파일에는 게임 데이터가 들어 있습니다. 실기에서는 SD 카드의 `/3ds/` 아래에 두고 Homebrew Launcher로 실행합니다. Azahar에서는 파일 열기로 `.3dsx`를 실행하거나 CIA를 설치합니다. 가상 SD에도 `dspfirm.cdc`가 필요합니다.
+`.3dsx` 파일에는 게임 데이터가 들어 있습니다. 실기에서는 SD 카드의 `/3ds/` 아래에 두고 Homebrew Launcher로 실행합니다. PC판 Azahar에서는 파일 열기로 `.3dsx`를 실행하거나 CIA를 설치합니다. 가상 SD에도 `dspfirm.cdc`가 필요합니다.
+
+에뮬레이터 확인은 PC판 Azahar에서만 했습니다. 모바일 Azahar나 Citra, Lime3DS 같은 다른 에뮬레이터는 실행해 보지 않았고, 동작을 보장하지 않습니다.
 
 ### 처음 실행
 
@@ -133,8 +135,8 @@ CIA가 필요 없으면 `--cia-template`과 `--makerom`을 생략합니다. `--l
 
 `dist/`에 세 파일이 생깁니다.
 
-- `DDLC-LOVE-KO-<버전>.cia` — CFW 3DS와 Azahar용 설치본
-- `DDLC-LOVE-KO-<버전>.3dsx` — Homebrew Launcher와 Azahar용 실행본
+- `DDLC-LOVE-KO-<버전>.cia` — CFW 3DS와 PC판 Azahar용 설치본
+- `DDLC-LOVE-KO-<버전>.3dsx` — Homebrew Launcher와 PC판 Azahar용 실행본
 - `SHA256SUMS.txt` — 위 두 파일의 SHA-256
 
 ## 확인한 범위
@@ -152,6 +154,8 @@ CIA가 필요 없으면 `--cia-template`과 `--makerom`을 생략합니다. `--l
 | CIA의 NCCH 헤더와 3단계 RomFS 해시 | 자동 | 통과 |
 | 메뉴 배경 1,920프레임, 미초기화 패딩 | 자동 | 통과 |
 | 첫 실행 안내와 게임 진행 | 실기 3DS | 0.2.7에서 확인 |
+| PC판 Azahar 실행 | 에뮬레이터 | 확인 |
+| 모바일 Azahar, Citra, Lime3DS | 에뮬레이터 | 미확인 |
 | 메뉴 위 검은 선 수정 | 실기 3DS | 확인 대기 |
 | 전체 루트·엔딩 완주 | 실기 3DS | 미확인 |
 | 장시간 메모리 사용 | 실기 3DS | 미확인 |
@@ -174,7 +178,7 @@ CIA가 필요 없으면 `--cia-template`과 `--makerom`을 생략합니다. `--l
 
 이름 입력을 여는 동안에는 타이틀 음악을 멈추고 대기 중인 오디오를 비웁니다. 음악 변경은 첫 씬이 완전히 그려진 뒤로 미루고, 그 다음 업데이트에서 마지막으로 요청된 트랙만 재생합니다.
 
-Azahar에서는 자판을 닫은 직후 브금이 잠깐 빨라질 수 있습니다. 이 게임의 게임별 Audio stretching을 끄면 정상 속도로 돌아옵니다.
+PC판 Azahar에서는 자판을 닫은 직후 브금이 잠깐 빨라질 수 있습니다. 이 게임의 게임별 Audio stretching을 끄면 정상 속도로 돌아옵니다.
 
 ### 배경
 
@@ -184,7 +188,7 @@ Azahar에서는 자판을 닫은 직후 브금이 잠깐 빨라질 수 있습니
 
 - 첫 실행에서 10016 안내가 멈추면 새 CIA로 업데이트하고 다시 실행합니다. 세이브는 지우지 않아도 됩니다. New 3DS/XL에서 Luma의 New 3DS CPU를 Clock+L2나 L2로 강제했다면 Off로 두고 확인합니다.
 - 메뉴 위에 검은 선이 보이면 0.2.9 이상인지 확인합니다. 그래도 남으면 기기 종류, Luma 버전, CIA title version과 함께 이슈에 남깁니다.
-- Azahar에서 브금이 처음에 빨라지면 게임별 Audio stretching을 끕니다. Title ID `0004000000DDFB00`에만 적용합니다.
+- PC판 Azahar에서 브금이 처음에 빨라지면 게임별 Audio stretching을 끕니다. Title ID `0004000000DDFB00`에만 적용합니다.
 - 한글 자판이 보이지 않으면 기기의 지역·언어 설정과 설치된 시스템 키보드를 확인합니다. 이 빌드가 자판을 추가하지는 않습니다.
 - 설치가 되지 않으면 CFW(Luma3DS), FBI 버전, SD 카드 여유 공간, CIA 다운로드 완료 여부를 확인합니다. 릴리스의 `SHA256SUMS.txt`와 해시를 비교합니다.
 - 소리가 나지 않으면 `sdmc:/3ds/dspfirm.cdc`가 있는지 확인합니다. 본인 기기에서 추출한 파일이어야 합니다.
@@ -206,6 +210,10 @@ Azahar에서는 자판을 닫은 직후 브금이 잠깐 빨라질 수 있습니
 ### 다른 3DS 게임에도 쓸 수 있나요?
 
 아닙니다. DDLC-LOVE의 런타임과 이 게임의 대사 구조에 맞춘 수정입니다.
+
+### 모바일 Azahar나 Citra에서도 되나요?
+
+확인하지 않았습니다. 에뮬레이터는 PC판 Azahar에서만 실행해 봤습니다. 모바일 Azahar와 다른 에뮬레이터는 동작을 보장하지 않습니다.
 
 ## 저장소 구조
 
