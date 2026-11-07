@@ -32,7 +32,7 @@
 
   <rect x="96" y="218" width="240" height="2" fill="url(#rule)"/>
 
-  <text x="96" y="250" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif" font-size="12" fill="#5f6a85">unofficial personal build · 0.2.7-beta</text>
+  <text x="96" y="250" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif" font-size="12" fill="#5f6a85">unofficial personal build</text>
 
   <g transform="translate(1000,58) scale(5.4)">
     <path d="M16 29S2 19.5 2 10.5C2 5.8 5.8 2 10.5 2c2.7 0 4.7 1.4 5.5 2.7C16.8 3.4 18.8 2 21.5 2 26.2 2 30 5.8 30 10.5 30 19.5 16 29 16 29z" fill="url(#accent)"/>
