@@ -58,11 +58,11 @@
 
 ## 무엇을 하는 저장소인가
 
-Nintendo 3DS용 [DDLC-LOVE](https://github.com/LukeZGD/DDLC-LOVE)에 기존 한국어 패치의 번역을 얹는 로컬 빌드 도구입니다. 게임을 새로 만들지 않고, LukeZGD의 Lua 포트와 LovePotion 런타임 위에서 한글 출력과 이름 입력을 손봅니다.
+Nintendo 3DS용 [DDLC-LOVE](https://github.com/LukeZGD/DDLC-LOVE)에 기존 한국어 패치의 번역을 얹는 로컬 빌드 도구입니다. 게임을 새로 만들지 않고, LukeZGD의 Lua 포트 위에서 한글 출력과 이름 입력만 손봅니다.
 
 - **결과물** — `.cia`와 `.3dsx`
 - **준비물** — 원본 게임과 한국어 패치 (저장소에 포함되지 않음)
-- **번역** — 직접 만들지 않음. 두근두근 문예부 한국어화 패치 문장을 Lua 대사에 맞춤
+- **번역** — 직접 만들지 않음. 기존 한국어화 패치 문장을 Lua 대사에 맞춤
 
 ### 이런 분께 맞습니다
 
@@ -76,16 +76,22 @@ PC판 Azahar에서 0.2.9 빌드로 찍었습니다. 실기 화면은 아직 캡�
 
 <table>
   <tr>
-    <td width="50%" align="center" valign="top">
-      <img src="docs/screenshots/title.png" alt="한국어 타이틀 화면" width="250"><br>
+    <td width="33%" align="center" valign="top">
+      <img src="docs/screenshots/title.png" alt="한국어 타이틀 화면" width="220"><br>
       <sub>타이틀 화면</sub>
     </td>
-    <td width="50%" align="center" valign="top">
-      <img src="docs/screenshots/dialogue.png" alt="한국어 인게임 대사" width="250"><br>
+    <td width="33%" align="center" valign="top">
+      <img src="docs/screenshots/name-input.png" alt="이름 입력 안내" width="220"><br>
+      <sub>이름 입력 안내</sub>
+    </td>
+    <td width="33%" align="center" valign="top">
+      <img src="docs/screenshots/dialogue.png" alt="한국어 인게임 대사" width="220"><br>
       <sub>인게임 대사</sub>
     </td>
   </tr>
 </table>
+
+<p align="center"><sub>이름은 3DS 시스템 키보드로 받습니다. 에뮬레이터에서는 자판이 게임 화면에 그려지지 않아 규칙 안내 화면을 담았습니다.</sub></p>
 
 ## 설치
 
