@@ -24,6 +24,7 @@
 
 <p align="center">
   <a href="#빠른-시작">빠른 시작</a> ·
+  <a href="#화면">화면</a> ·
   <a href="#설치">설치</a> ·
   <a href="#처음-실행">처음 실행</a> ·
   <a href="#확인한-범위">확인 범위</a> ·
@@ -57,11 +58,11 @@
 
 ## 무엇을 하는 저장소인가
 
-Nintendo 3DS용 [DDLC-LOVE](https://github.com/LukeZGD/DDLC-LOVE)에 기존 한국어 패치의 번역을 얹는 로컬 빌드 도구입니다. 게임을 새로 만들지 않고, LukeZGD의 Lua 포트와 LovePotion 런타임 위에서 한글 출력과 이름 입력만 손봅니다.
+Nintendo 3DS용 [DDLC-LOVE](https://github.com/LukeZGD/DDLC-LOVE)에 기존 한국어 패치의 번역을 얹는 로컬 빌드 도구입니다. 게임을 새로 만들지 않고, LukeZGD의 Lua 포트와 LovePotion 런타임 위에서 한글 출력과 이름 입력을 손봅니다.
 
 - **결과물** — `.cia`와 `.3dsx`
 - **준비물** — 원본 게임과 한국어 패치 (저장소에 포함되지 않음)
-- **빌드 위치** — 사용자 PC
+- **번역** — 직접 만들지 않음. 두근두근 문예부 한국어화 패치 문장을 Lua 대사에 맞춤
 
 ### 이런 분께 맞습니다
 
@@ -69,11 +70,31 @@ Nintendo 3DS용 [DDLC-LOVE](https://github.com/LukeZGD/DDLC-LOVE)에 기존 한�
 - PC판 Azahar에서 먼저 확인해 보고 싶은 분
 - 직접 빌드해서 결과물을 만들고 싶은 분
 
-번역은 이 저장소에서 만들지 않습니다. 두근두근 문예부 한국어화 패치의 문장을 Lua 대사에 맞추고, 3DS 런타임이 그 문장을 그릴 수 있게 만드는 쪽입니다.
+## 화면
+
+PC판 Azahar에서 0.2.9 빌드로 찍었습니다. 실기 화면은 아직 캡처하지 않았습니다.
+
+<table>
+  <tr>
+    <td width="50%" align="center" valign="top">
+      <img src="docs/screenshots/title.png" alt="한국어 타이틀 화면" width="250"><br>
+      <sub>타이틀 화면</sub>
+    </td>
+    <td width="50%" align="center" valign="top">
+      <img src="docs/screenshots/dialogue.png" alt="한국어 인게임 대사" width="250"><br>
+      <sub>인게임 대사</sub>
+    </td>
+  </tr>
+</table>
 
 ## 설치
 
-권장은 CIA입니다. FBI의 QR 설치로 바로 받거나, SD 카드에 넣어 설치합니다.
+권장 경로는 CIA입니다. 순서대로 하면 네 단계입니다.
+
+1. 최신 릴리스에서 CIA를 받거나, 아래 QR을 FBI로 읽습니다.
+2. FBI로 설치합니다.
+3. SD 카드에 `sdmc:/3ds/dspfirm.cdc`를 넣습니다. 본인 기기에서 추출한 파일입니다.
+4. 홈 메뉴에서 게임을 실행합니다.
 
 ### 받아야 하는 파일
 
@@ -154,9 +175,7 @@ sdmc:/3ds/data/LovePotion/DDLC-3DS-KO/hardware-startup.log
 
 ## 원본과 다른 점
 
-원본 DDLC-LOVE는 한글을 전제로 만들지 않았습니다. LovePotion 1.0.9는 글꼴을 바이트 단위로 처리해서 UTF-8 한글 한 글자(3바이트)가 자모로 쪼개지고, 기본 글꼴에는 한글 글리프도 없습니다. 한국어 패치는 Ren'Py용이라 3DS Lua 대사와 바로 연결되지 않고, 시 튜토리얼은 이미지 안에 영어가 박혀 있습니다.
-
-이 빌드는 렌더러, 글꼴, 대사 대응, 이미지 글자 영역을 각각 손봅니다. 원본 타이머와 저장 식별자는 그대로 둡니다.
+원본 DDLC-LOVE는 한글을 전제로 만들지 않았습니다. LovePotion 1.0.9는 글꼴을 바이트 단위로 처리해서 UTF-8 한글 한 글자(3바이트)가 자모로 쪼개지고, 기본 글꼴에는 한글 글리프가 없습니다. 한국어 패치는 Ren'Py용이라 3DS Lua 대사와 바로 이어지지 않고, 시 튜토리얼은 이미지 안에 영어가 박혀 있습니다.
 
 | 항목 | 원본 DDLC-LOVE | 이 저장소의 빌드 |
 |:--|:--|:--|
@@ -164,6 +183,8 @@ sdmc:/3ds/data/LovePotion/DDLC-3DS-KO/hardware-startup.log
 | 글꼴 | 라틴 문자 중심 | 현대 한글 11,172자 |
 | 이름 입력 | 게임 내 자판 | 3DS 기본 소프트웨어 키보드 |
 | 시 튜토리얼 | 영어 이미지 | 글자 영역만 한국어 |
+
+렌더러, 글꼴, 대사 대응, 이미지 글자 영역을 각각 손봤고 원본 타이머와 저장 식별자는 그대로 둡니다.
 
 ## 확인한 범위
 
